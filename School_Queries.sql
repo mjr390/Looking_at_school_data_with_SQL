@@ -27,6 +27,36 @@ JOIN ( SELECT st.Student_ID, COUNT(*) pass_m
 JOIN ( SELECT st.Student_ID, COUNT(*) pass_r
 		FROM students_data st 
         WHERE st.reading_score >= 70) t2
+;
 
+#
+CREATE VIEW Schools_Breakdown AS
+SELECT sc.name School_Name, sc.type School_Type, sc.size School_Size, sc.budget School_budget, sc.budget/sc.size Budget_Per_Student,
+    AVG(st.math_score) Average_Math_Score, AVG(st.reading_score) Average_Reading_Score, (pass_m/sc.size*100) Percent_Passing_Math,
+    (pass_r/sc.size*100) Percent_Passing_Reading, ((pass_m/sc.size*100)+(pass_r/sc.size*100))/2 Overall_Passing_Rate
+FROM schools_data sc
+JOIN students_data st
+ON sc.name = st.school
+JOIN ( SELECT COUNT(*) pass_m, sc.name Sc_Name
+		FROM students_data st
+        JOIN schools_data sc
+        ON st.school = sc.name
+        WHERE st.math_score >= 70
+        GROUP BY 2) t1
+ON t1.Sc_Name = sc.name      
+JOIN ( SELECT sc.name Sch_name, COUNT(*) pass_r
+		FROM students_data st 
+        JOIN schools_data sc
+        ON st.school = sc.name
+        WHERE st.reading_score >= 70
+        GROUP BY 1) t2
+ON t2.Sch_name = sc.name        
+GROUP BY 1
+;
 
+SELECT * 
+FROM Schools_Breakdown
+ORDER BY Overall_Passing_Rate DESC
+LIMIT 5 
+;
 
