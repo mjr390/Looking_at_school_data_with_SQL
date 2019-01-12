@@ -1,3 +1,4 @@
+```sql
 use SQL_City_Schools;
 # Change the names of columns containing spaces so they are easier to work with
 # No need to run these lines more than once
@@ -84,3 +85,4 @@ JOIN students_data st
 ON sc.name = st.school      
 GROUP BY 1, 2
 ;
+```
