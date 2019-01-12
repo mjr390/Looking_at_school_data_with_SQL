@@ -29,7 +29,8 @@ JOIN ( SELECT st.Student_ID, COUNT(*) pass_r
         WHERE st.reading_score >= 70) t2
 ;
 
-#
+# Create a view containing the infor on the previous query but broken down by School
+# This will be used to easily compare the schools with the top passing rates and the schools with the bottom 5 passing rates
 CREATE VIEW Schools_Breakdown AS
 SELECT sc.name School_Name, sc.type School_Type, sc.size School_Size, sc.budget School_budget, sc.budget/sc.size Budget_Per_Student,
     AVG(st.math_score) Average_Math_Score, AVG(st.reading_score) Average_Reading_Score, (pass_m/sc.size*100) Percent_Passing_Math,
@@ -54,9 +55,32 @@ ON t2.Sch_name = sc.name
 GROUP BY 1
 ;
 
+# Use the view to find 5 schools with the highest passing rate
 SELECT * 
 FROM Schools_Breakdown
 ORDER BY Overall_Passing_Rate DESC
 LIMIT 5 
 ;
 
+# Use the view to find 5 schools with the lowest passing rate
+SELECT * 
+FROM Schools_Breakdown
+ORDER BY Overall_Passing_Rate 
+LIMIT 5 
+;
+
+SELECT sc.name School_Name, st.grade Grade, sc.type School_Type,
+    AVG(st.math_score) Average_Math_Score
+FROM schools_data sc
+JOIN students_data st
+ON sc.name = st.school      
+GROUP BY 1, 2
+;
+
+SELECT sc.name School_Name, st.grade Grade, sc.type School_Type,
+    AVG(st.reading_score) Average_Reading_Score
+FROM schools_data sc
+JOIN students_data st
+ON sc.name = st.school      
+GROUP BY 1, 2
+;
