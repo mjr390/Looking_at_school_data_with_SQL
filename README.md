@@ -31,7 +31,7 @@ JOIN ( SELECT st.Student_ID, COUNT(*) pass_r
         WHERE st.reading_score >= 70) t2
 ;
 ```
-![png](output1.png)
+![png](Output1.png)
 ```sql
 # Create a view containing the infor on the previous query but broken down by School
 # This will be used to easily compare the schools with the top passing rates and the schools with the bottom 5 passing rates
