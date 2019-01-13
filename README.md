@@ -12,7 +12,8 @@ FROM(	select DISTINCT Student_ID
     
 SELECT COUNT(*)
 FROM students_data;   
-
+```
+```sql
 # Create a single table with some key metrics for the entire district
 # This table will show the total number of schools, total number of students and the total budget for the entire district
 # It will also show the average scores for each subject as well as what percent of students are passing each subject. A score of at least 70 is required to pass
@@ -29,7 +30,9 @@ JOIN ( SELECT st.Student_ID, COUNT(*) pass_r
 		FROM students_data st 
         WHERE st.reading_score >= 70) t2
 ;
-
+```
+![png](output1.png)
+```sql
 # Create a view containing the infor on the previous query but broken down by School
 # This will be used to easily compare the schools with the top passing rates and the schools with the bottom 5 passing rates
 CREATE VIEW Schools_Breakdown AS
@@ -62,14 +65,18 @@ FROM Schools_Breakdown
 ORDER BY Overall_Passing_Rate DESC
 LIMIT 5 
 ;
-
+```
+output here
+```sql
 # Use the view to find 5 schools with the lowest passing rate
 SELECT * 
 FROM Schools_Breakdown
 ORDER BY Overall_Passing_Rate 
 LIMIT 5 
 ;
-
+```
+ouput here
+```sql
 SELECT sc.name School_Name, st.grade Grade, sc.type School_Type,
     AVG(st.math_score) Average_Math_Score
 FROM schools_data sc
@@ -77,7 +84,8 @@ JOIN students_data st
 ON sc.name = st.school      
 GROUP BY 1, 2
 ;
-
+```
+```sql
 SELECT sc.name School_Name, st.grade Grade, sc.type School_Type,
     AVG(st.reading_score) Average_Reading_Score
 FROM schools_data sc
