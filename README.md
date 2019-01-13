@@ -66,7 +66,7 @@ ORDER BY Overall_Passing_Rate DESC
 LIMIT 5 
 ;
 ```
-output here
+![png](Output2.png)
 ```sql
 # Use the view to find 5 schools with the lowest passing rate
 SELECT * 
@@ -75,7 +75,7 @@ ORDER BY Overall_Passing_Rate
 LIMIT 5 
 ;
 ```
-ouput here
+![png](Output3.png)
 ```sql
 SELECT sc.name School_Name, st.grade Grade, sc.type School_Type,
     AVG(st.math_score) Average_Math_Score
